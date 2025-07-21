@@ -9,8 +9,6 @@ import {
 
 const symbolManipulators = [
   // Numeric row
-  map('grave_accent_and_tilde').to('7', 'shift'), // ZenHan => '
-  map('grave_accent_and_tilde', 'shift').to('2', 'shift'), // Shift + ZenHan => "
   map('2', 'shift').to('open_bracket'), // Shift + 2 => @
   map('7', 'shift').to('international3', 'shift'), // Shift + 7 => |
   map('0', 'shift').to('open_bracket', 'shift'), // Shift + 0 => `
@@ -33,14 +31,25 @@ const symbolManipulators = [
 const modifierManipulators = [
   map('japanese_pc_nfer').to('left_command'), // MuHenkan => LeftCommand
   map('japanese_pc_xfer').to('right_command'), // Henkan => RightCommand
+  map('japanese_pc_katakana').to('left_control', ["left_option", 'left_shift']), // Katakana => LeftControl + LeftOption + LeftShift
   map('left_command').to('left_control'), // LeftCommand => LeftControl
   map('print_screen').to('right_control'), // PrintScreen => RightControl
-  map('left_control').to('left_control', ['left_option', 'left_shift']), // LeftControl => LeftControl + LeftOption + LeftShift
-  map('right_control').to('right_control', ['right_option', 'right_shift']), // RightControl => RightControl + RightOption + RightShift
 ];
 
-const languageManipulators = [
-  map('japanese_pc_katakana').to('f14'), // Katakana => F14
+const arrowManipulators = [
+  map('grave_accent_and_tilde').to('up_arrow'), // ZenHan => UpArrow
+  map('tab').to('down_arrow'), // Tab => DownArrow
+]
+
+const specialManipulators = [
+  map('left_shift').to('delete_or_backspace'), // LeftShift => Delete/Backspace
+]
+
+// These temporal manipulators are for keeping mandatory keys when modding the layout.
+const temporalManipulators = [
+  map('right_control').to('7', 'shift'), // Right Control => '
+  map('right_control', 'shift').to('2', 'shift'), // Shift + Right Control => "
+  map('left_control').to('tab'), // Left Control => Tab
 ]
 
 // ! Change '--dry-run' to your Karabiner-Elements Profile name.
@@ -50,6 +59,8 @@ writeToProfile('Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283', [
   rule('Key mapping').manipulators([
     ...symbolManipulators,
     ...modifierManipulators,
-    ...languageManipulators,
+    ...arrowManipulators,
+    ...specialManipulators,
+    ...temporalManipulators,
   ]),
 ])
