@@ -30,11 +30,22 @@ const symbolManipulators = [
   map('international1', 'shift').to('international3', 'option'), // Shift + _ => \
 ]
 
+const modifierManipulators = [
+  map('japanese_pc_nfer').to('left_command'), // MuHenkan => LeftCommand
+  map('japanese_pc_xfer').to('right_command'), // Henkan => RightCommand
+  map('japanese_pc_katakana').to('right_shift'), // Katakana => RightShift, Might be changed
+  map('left_command').to('left_control'), // LeftCommand => LeftControl
+  map('print_screen').to('right_control'), // PrintScreen => RightControl
+  map('left_control').to('left_control', ['left_option', 'left_shift']), // LeftControl => LeftControl + LeftOption + LeftShift
+  map('right_control').to('right_control', ['right_option', 'right_shift']), // RightControl => RightControl + RightOption + RightShift
+];
+
 // ! Change '--dry-run' to your Karabiner-Elements Profile name.
 // (--dry-run print the config json into console)
 // + Create a new profile if needed.
 writeToProfile('Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283', [
   rule('Key mapping').manipulators([
     ...symbolManipulators,
+    ...modifierManipulators,
   ]),
 ])
