@@ -10,16 +10,22 @@ import {
 const symbolManipulators = [
   // Numeric row
   map('grave_accent_and_tilde').to('7', 'shift'), // ZenHan => '
+  map('grave_accent_and_tilde', 'shift').to('2', 'shift'), // Shift + ZenHan => "
   map('2', 'shift').to('open_bracket'), // Shift + 2 => @
   map('7', 'shift').to('international3', 'shift'), // Shift + 7 => |
   map('0', 'shift').to('open_bracket', 'shift'), // Shift + 0 => `
   map('hyphen').to('equal_sign'), // - => ^
+  map('hyphen', 'shift').to('equal_sign', 'shift'), // Shift + - => ~
   // Top row
   map('open_bracket').to('close_bracket'), // @ => [
+  map('open_bracket', 'shift').to('close_bracket', 'shift'), // Shift + @ => {
   map('close_bracket').to('non_us_pound'), // [ => ]
+  map('close_bracket', 'shift').to('non_us_pound', 'shift'), // Shift + [ => }
   // Middle row
   map('semicolon').to('hyphen'), // ; => -
+  map('semicolon', 'shift').to('hyphen', 'shift'), // Shift + ; => =
   map('non_us_pound').to('semicolon'), // ] => ;
+  map('non_us_pound', 'shift').to('semicolon', 'shift'), // Shift + ] => +
   // Bottom row
   map('international1', 'shift').to('international3', 'option'), // Shift + _ => \
 ]
