@@ -3,7 +3,7 @@
 
 import {
   FromKeyParam,
-  map, mapDoubleTap, ModifierParam,
+  map, ModifierParam,
   rule, ToEvent, writeToProfile,
 } from 'karabiner.ts'
 
