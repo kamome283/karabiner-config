@@ -42,6 +42,12 @@ const symbolManipulatorsBase: Parameters<typeof createSymbolManipulator>[0][] = 
   },
   // Middle row
   {
+    from: 'caps_lock', defs: [
+      [undefined, {key_code: '7', modifiers: ['shift']}], // CapsLock => '
+      ['shift', {key_code: '2', modifiers: ['shift']}], // Shift + CapsLock => "
+    ],
+  },
+  {
     from: 'semicolon', defs: [
       [undefined, {key_code: 'hyphen'}], // ; => -
       ['shift', {key_code: 'hyphen', modifiers: ['shift']}], // Shift + ; => =
@@ -77,35 +83,27 @@ const modifierManipulatorsBase: Parameters<typeof createModManipulator>[] = [
   ['spacebar', {key_code: 'left_shift'}, {key_code: 'spacebar'}], // Space => LeftShift with Space
   ['japanese_pc_nfer', {key_code: 'left_command'}, {key_code: 'escape'}], // MuHenkan => LeftCommand with Escape
   ['japanese_pc_xfer', {key_code: 'right_command'}, {key_code: 'return_or_enter'}], // Henkan => RightCommand with Return
-  ['japanese_pc_katakana',
-    {key_code: 'left_control', modifiers: ['left_option', 'left_shift']},
-    undefined], // Katakana => LeftControl + LeftOption + LeftShift
+  ['japanese_pc_katakana', {
+    key_code: 'left_control',
+    modifiers: ['left_option', 'left_shift']
+  }, undefined], // Katakana => LeftControl + LeftOption + LeftShift
   ['left_option', {key_code: 'left_option'}, {key_code: 'tab'}], // LeftOption => LeftOption with Tab
-  ['right_option',
-    {key_code: 'right_option'},
-    {key_code: 'left_arrow'}], // RightOption => RightOption with LeftArrow
-  ['left_command', {key_code: 'left_control'}, {key_code: '7', modifiers: ['shift']}], // LeftCommand => LeftControl with Shift + 7
-  ['print_screen',
-    {key_code: 'right_control'},
-    {key_code: 'right_arrow'}], // PrintScreen => RightControl with RightArrow
+  ['right_option', {key_code: 'right_option'}, {key_code: 'left_arrow'}], // RightOption => RightOption with LeftArrow
+  ['left_command', {key_code: 'left_control'}, {key_code: 'delete_or_backspace'}], // LeftCommand => LeftControl with Delete/Backspace
+  ['print_screen', {key_code: 'right_control'}, {key_code: 'right_arrow'}], // PrintScreen => RightControl with RightArrow
 ];
 
 const modifierManipulators = modifierManipulatorsBase.map((args) => createModManipulator(...args));
 
-const arrowManipulators = [
+const specialManipulators = [
   map('grave_accent_and_tilde').to('up_arrow'), // ZenHan => UpArrow
   map('tab').to('down_arrow'), // Tab => DownArrow
-]
-
-const specialManipulators = [
-  map('left_shift').to('delete_or_backspace'), // LeftShift => Delete/Backspace
+  map('left_shift').to('left_arrow'), // LeftShift => LeftArrow
+  map('right_shift').to('right_arrow'), // RightShift => RightArrow
 ]
 
 // These temporal manipulators are for keeping mandatory keys when modding the layout.
 const temporalManipulators = [
-  map('right_control').to('7', 'shift'), // Right Control => '
-  map('right_control', 'shift').to('2', 'shift'), // Shift + Right Control => "
-  map('left_control').to('tab'), // Left Control => Tab
 ]
 
 // ! Change '--dry-run' to your Karabiner-Elements Profile name.
@@ -115,7 +113,6 @@ writeToProfile('Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283', [
   rule('Key mapping').manipulators([
     ...symbolManipulators,
     ...modifierManipulators,
-    ...arrowManipulators,
     ...specialManipulators,
     ...temporalManipulators,
   ]),
