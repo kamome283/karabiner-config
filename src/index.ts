@@ -3,7 +3,7 @@
 
 import {
   FromKeyParam,
-  map, ModifierParam,
+  map, mapDoubleTap, ModifierParam,
   rule, ToEvent, writeToProfile,
 } from 'karabiner.ts'
 
@@ -86,7 +86,7 @@ const modifierManipulatorsBase: Parameters<typeof createModManipulator>[] = [
   ['japanese_pc_katakana', {
     key_code: 'left_control',
     modifiers: ['left_option', 'left_shift']
-  }, undefined], // Katakana => LeftControl + LeftOption + LeftShift
+  }, {key_code: 'f14'}], // Katakana => LeftControl + LeftOption + LeftShift with F14
   ['left_option', {key_code: 'left_option'}, {key_code: 'tab'}], // LeftOption => LeftOption with Tab
   ['right_option', {key_code: 'right_option'}, {key_code: 'left_arrow'}], // RightOption => RightOption with LeftArrow
   ['left_command', {key_code: 'left_control'}, {key_code: 'delete_or_backspace'}], // LeftCommand => LeftControl with Delete/Backspace
@@ -103,8 +103,7 @@ const specialManipulators = [
 ]
 
 // These temporal manipulators are for keeping mandatory keys when modding the layout.
-const temporalManipulators = [
-]
+const temporalManipulators = []
 
 // ! Change '--dry-run' to your Karabiner-Elements Profile name.
 // (--dry-run print the config json into console)
