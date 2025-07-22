@@ -3,30 +3,65 @@
 
 import {
   FromKeyParam,
-  map,
+  map, ModifierParam,
   rule, ToEvent, writeToProfile,
 } from 'karabiner.ts'
 
-const symbolManipulators = [
+function createSymbolManipulator({from, defs,}: {
+  from: FromKeyParam;
+  defs: ([ModifierParam | undefined, ToEvent])[];
+}) {
+  return defs.map(([modifier, to]) =>
+    modifier ? map(from, modifier).to(to) : map(from).to(to)
+  );
+}
+
+const symbolManipulatorsBase: Parameters<typeof createSymbolManipulator>[0][] = [
   // Numeric row
-  map('2', 'shift').to('open_bracket'), // Shift + 2 => @
-  map('7', 'shift').to('international3', 'shift'), // Shift + 7 => |
-  map('0', 'shift').to('open_bracket', 'shift'), // Shift + 0 => `
-  map('hyphen').to('equal_sign'), // - => ^
-  map('hyphen', 'shift').to('equal_sign', 'shift'), // Shift + - => ~
+  {from: '2', defs: [['shift', {key_code: 'open_bracket'}]]}, // Shift + 2 => @
+  {from: '7', defs: [['shift', {key_code: 'international3', modifiers: ['shift']}]]}, // Shift + 7 => |
+  {from: '0', defs: [['shift', {key_code: 'open_bracket', modifiers: ['shift']}]]}, // Shift + 0 => `
+  {
+    from: 'hyphen', defs: [
+      [undefined, {key_code: 'equal_sign'}], // - => ^
+      ['shift', {key_code: 'equal_sign', modifiers: ['shift']}], // Shift + - => ~
+    ],
+  },
   // Top row
-  map('open_bracket').to('close_bracket'), // @ => [
-  map('open_bracket', 'shift').to('close_bracket', 'shift'), // Shift + @ => {
-  map('close_bracket').to('non_us_pound'), // [ => ]
-  map('close_bracket', 'shift').to('non_us_pound', 'shift'), // Shift + [ => }
+  {
+    from: 'open_bracket', defs: [
+      [undefined, {key_code: 'close_bracket'}], // @ => [
+      ['shift', {key_code: 'close_bracket', modifiers: ['shift']}], // Shift + @ => {
+    ],
+  },
+  {
+    from: 'close_bracket', defs: [
+      [undefined, {key_code: 'non_us_pound'}], // [ => ]
+      ['shift', {key_code: 'non_us_pound', modifiers: ['shift']}], // Shift + [ => }
+    ],
+  },
   // Middle row
-  map('semicolon').to('hyphen'), // ; => -
-  map('semicolon', 'shift').to('hyphen', 'shift'), // Shift + ; => =
-  map('non_us_pound').to('semicolon'), // ] => ;
-  map('non_us_pound', 'shift').to('semicolon', 'shift'), // Shift + ] => +
+  {
+    from: 'semicolon', defs: [
+      [undefined, {key_code: 'hyphen'}], // ; => -
+      ['shift', {key_code: 'hyphen', modifiers: ['shift']}], // Shift + ; => =
+    ],
+  },
+  {
+    from: 'non_us_pound', defs: [
+      [undefined, {key_code: 'semicolon'}], // ] => ;
+      ['shift', {key_code: 'semicolon', modifiers: ['shift']}], // Shift + ] => +
+    ],
+  },
   // Bottom row
-  map('international1', 'shift').to('international3', 'option'), // Shift + _ => \
-]
+  {
+    from: 'international1', defs: [
+      ['shift', {key_code: 'international3', modifiers: ['option']}], // Shift + _ => \
+    ],
+  },
+];
+
+const symbolManipulators = symbolManipulatorsBase.flatMap((args) => createSymbolManipulator(args))
 
 function createModManipulator(
   from: FromKeyParam,
