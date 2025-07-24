@@ -11,9 +11,11 @@ function createSymbolManipulator({from, defs,}: {
   from: FromKeyParam;
   defs: ([ModifierParam | undefined, ToEvent])[];
 }) {
-  return defs.map(([modifier, to]) =>
-    modifier ? map(from, modifier).to(to) : map(from).to(to)
-  );
+  return defs.map(([modifier, to]) => {
+    const modifiers = ['shift', 'option', 'control', 'command'] as const
+    const optionalModifiers = modifiers.filter((m) => m !== modifier)
+    return map(from, modifier, optionalModifiers).to(to)
+  });
 }
 
 const symbolManipulatorsBase: Parameters<typeof createSymbolManipulator>[0][] = [
