@@ -103,12 +103,30 @@ const modifierManipulatorsBase: Parameters<typeof createModManipulator>[] = [
 
 const modifierManipulators = modifierManipulatorsBase.map((args) => createModManipulator(...args));
 
-const specialManipulators = [
-  map('grave_accent_and_tilde').to('up_arrow'), // ZenHan => UpArrow
-  map('tab').to('down_arrow'), // Tab => DownArrow
-  map('left_shift').to('left_arrow'), // LeftShift => LeftArrow
-  map('right_shift').to('right_arrow'), // RightShift => RightArrow
+const specialManipulatorsBase: ManipulatorBase[] = [
+  {
+    from: 'grave_accent_and_tilde', defs: [
+      [undefined, {key_code: 'up_arrow'}],
+    ]
+  },
+  {
+    from: 'tab', defs: [
+      [undefined, {key_code: 'down_arrow'}],
+    ]
+  },
+  {
+    from: 'left_shift', defs: [
+      [undefined, {key_code: 'left_arrow'}],
+    ]
+  },
+  {
+    from: 'right_shift', defs: [
+      [undefined, {key_code: 'right_arrow'}],
+    ]
+  },
 ]
+
+const specialManipulators = specialManipulatorsBase.flatMap(args => createManipulators(args))
 
 // These temporal manipulators are for keeping mandatory keys when modding the layout.
 const temporalManipulators = []
