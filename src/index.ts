@@ -7,7 +7,7 @@ import {
   rule, ToEvent, writeToProfile,
 } from 'karabiner.ts'
 
-function createSymbolManipulator({from, defs,}: {
+function createManipulators({from, defs,}: {
   from: FromKeyParam;
   defs: ([ModifierParam | undefined, ToEvent])[];
 }) {
@@ -18,7 +18,9 @@ function createSymbolManipulator({from, defs,}: {
   });
 }
 
-const symbolManipulatorsBase: Parameters<typeof createSymbolManipulator>[0][] = [
+type ManipulatorBase = Parameters<typeof createManipulators>[0];
+
+const symbolManipulatorsBase: ManipulatorBase[] = [
   // Numeric row
   {from: '2', defs: [['shift', {key_code: 'open_bracket'}]]}, // Shift + 2 => @
   {from: '7', defs: [['shift', {key_code: 'international3', modifiers: ['shift']}]]}, // Shift + 7 => |
@@ -69,7 +71,7 @@ const symbolManipulatorsBase: Parameters<typeof createSymbolManipulator>[0][] = 
   },
 ];
 
-const symbolManipulators = symbolManipulatorsBase.flatMap((args) => createSymbolManipulator(args))
+const symbolManipulators = symbolManipulatorsBase.flatMap((args) => createManipulators(args))
 
 function createModManipulator(
   from: FromKeyParam,
