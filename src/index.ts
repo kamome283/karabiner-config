@@ -79,8 +79,7 @@ function createModManipulator(
   toIfAlone?: ToEvent
 ) {
   const manipulator = map(from, undefined, 'any')
-    // Enabling lazy causes issues only using modifier itself or with mouse button.
-    .to({...to, lazy: false})
+    .to({...to, lazy: true})
   return toIfAlone ? manipulator.toIfAlone(toIfAlone) : manipulator
 }
 
@@ -91,7 +90,7 @@ const modifierManipulatorsBase: Parameters<typeof createModManipulator>[] = [
   ['japanese_pc_katakana', {
     key_code: 'left_control',
     modifiers: ['left_option', 'left_shift']
-  }, {key_code: 'f14'}], // Katakana => LeftControl + LeftOption + LeftShift with F14
+  }, {key_code: 'f19'}], // Katakana => LeftControl + LeftOption + LeftShift with F14
   ['left_option', {key_code: 'left_option'}, {key_code: 'tab'}], // LeftOption => LeftOption with Tab
   ['right_option',
     {key_code: 'right_option'},
