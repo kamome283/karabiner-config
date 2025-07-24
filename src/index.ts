@@ -79,7 +79,8 @@ function createModManipulator(
   toIfAlone?: ToEvent
 ) {
   const manipulator = map(from, undefined, 'any')
-    .to({...to, lazy: true})
+    // Enabling lazy causes issues only using modifier itself or with mouse button.
+    .to({...to, lazy: false})
   return toIfAlone ? manipulator.toIfAlone(toIfAlone) : manipulator
 }
 
