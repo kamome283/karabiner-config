@@ -88,9 +88,9 @@ const modifierManipulatorsBase: Parameters<typeof createModManipulator>[] = [
     modifiers: ['left_option', 'left_shift']
   }, {key_code: 'f14'}], // Katakana => LeftControl + LeftOption + LeftShift with F14
   ['left_option', {key_code: 'left_option'}, {key_code: 'tab'}], // LeftOption => LeftOption with Tab
-  ['right_option', {key_code: 'right_option'}, {key_code: 'left_arrow'}], // RightOption => RightOption with LeftArrow
+  ['right_option', {key_code: 'right_option'}, undefined], // RightOption => RightOption with LeftArrow
   ['left_command', {key_code: 'left_control'}, {key_code: 'delete_or_backspace'}], // LeftCommand => LeftControl with Delete/Backspace
-  ['print_screen', {key_code: 'right_control'}, {key_code: 'right_arrow'}], // PrintScreen => RightControl with RightArrow
+  ['print_screen', {key_code: 'right_control'}, undefined], // PrintScreen => RightControl with RightArrow
 ];
 
 const modifierManipulators = modifierManipulatorsBase.map((args) => createModManipulator(...args));
