@@ -11,9 +11,10 @@ function createManipulators({from, defs,}: {
   from: FromKeyParam;
   defs: ([ModifierParam | undefined, ToEvent])[];
 }) {
+  const modifiers = ['shift', 'option', 'control', 'command'] as const
+  const defModifiers = defs.flatMap(([, to]) => to.modifiers)
+  const optionalModifiers = modifiers.filter((m) => !defModifiers.includes(m))
   return defs.map(([modifier, to]) => {
-    const modifiers = ['shift', 'option', 'control', 'command'] as const
-    const optionalModifiers = modifiers.filter((m) => m !== modifier)
     return map(from, modifier, optionalModifiers).to(to)
   });
 }
