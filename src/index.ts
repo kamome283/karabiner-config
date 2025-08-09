@@ -1,145 +1,63 @@
 /// Using a JIS based keyboard, so that the mapping symbols are different from US layout.
 /// Take a look at comments for the mapping corresponding.
 
-import {
-  FromKeyParam,
-  map, ModifierParam,
-  rule, ToEvent, writeToProfile,
-} from 'karabiner.ts'
+import {map, rule, writeToProfile,} from 'karabiner.ts'
 
-function createManipulators({from, defs,}: {
-  from: FromKeyParam;
-  defs: ([ModifierParam | undefined, ToEvent])[];
-}) {
-  const modifiers = ['shift', 'option', 'control', 'command'] as const
-  const defModifiers = defs.flatMap(([, to]) => to.modifiers)
-  const optionalModifiers = modifiers.filter((m) => !defModifiers.includes(m))
-  return defs.map(([modifier, to]) => {
-    return map(from, modifier, optionalModifiers).to(to)
-  });
-}
+type Definition = ReturnType<typeof map>
 
-type ManipulatorBase = Parameters<typeof createManipulators>[0];
-
-const symbolManipulatorsBase: ManipulatorBase[] = [
+const symbolDefinitions: Definition[] = [
   // Numeric row
-  {from: '2', defs: [['shift', {key_code: 'open_bracket'}]]}, // Shift + 2 => @
-  {from: '7', defs: [['shift', {key_code: 'international3', modifiers: ['shift']}]]}, // Shift + 7 => |
-  {from: '0', defs: [['shift', {key_code: 'open_bracket', modifiers: ['shift']}]]}, // Shift + 0 => `
-  {
-    from: 'hyphen', defs: [
-      [undefined, {key_code: 'equal_sign'}], // - => ^
-      ['shift', {key_code: 'equal_sign', modifiers: ['shift']}], // Shift + - => ~
-    ],
-  },
+  map('2', 'shift').to('open_bracket', 'shift'), // Shift + 2 => @
+  map('7', 'shift').to('international3', 'shift'), // Shift + 7 => |
+  map('0', 'shift').to('open_bracket', 'shift'), // Shift + 0 => `
+  map('hyphen').to('equal_sign'), // - => ^
+  map('hyphen', 'shift').to('equal_sign', 'shift'), // Shift + - => ~
   // Top row
-  {
-    from: 'open_bracket', defs: [
-      [undefined, {key_code: 'close_bracket'}], // @ => [
-      ['shift', {key_code: 'close_bracket', modifiers: ['shift']}], // Shift + @ => {
-    ],
-  },
-  {
-    from: 'close_bracket', defs: [
-      [undefined, {key_code: 'non_us_pound'}], // [ => ]
-      ['shift', {key_code: 'non_us_pound', modifiers: ['shift']}], // Shift + [ => }
-    ],
-  },
+  map('open_bracket').to('close_bracket'), // @ => [
+  map('open_bracket', 'shift').to('close_bracket', 'shift'), // Shift + @ => {
+  map('close_bracket').to('non_us_pound'), // [ => ]
+  map('close_bracket', 'shift').to('non_us_pound', 'shift'), // Shift + [ => }
   // Middle row
-  {
-    from: 'caps_lock', defs: [
-      [undefined, {key_code: '7', modifiers: ['shift']}], // CapsLock => '
-      ['shift', {key_code: '2', modifiers: ['shift']}], // Shift + CapsLock => "
-    ],
-  },
-  {
-    from: 'semicolon', defs: [
-      [undefined, {key_code: 'hyphen'}], // ; => -
-      ['shift', {key_code: 'hyphen', modifiers: ['shift']}], // Shift + ; => =
-    ],
-  },
-  {
-    from: 'non_us_pound', defs: [
-      [undefined, {key_code: 'semicolon'}], // ] => ;
-      ['shift', {key_code: 'semicolon', modifiers: ['shift']}], // Shift + ] => +
-    ],
-  },
+  map('caps_lock').to('7', 'shift'), // CapsLock => '
+  map('caps_lock', 'shift').to('2', 'shift'), // Shift + CapsLock => "
+  map('semicolon').to('hyphen'), // ; => -
+  map('semicolon', 'shift').to('hyphen', 'shift'), // Shift + ; => =
+  map('non_us_pound').to('semicolon'), // ] => ;
+  map('non_us_pound', 'shift').to('semicolon', 'shift'), // Shift + ] => +
   // Bottom row
-  {
-    from: 'international1', defs: [
-      ['shift', {key_code: 'international3', modifiers: ['option']}], // Shift + _ => \
-    ],
-  },
-];
-
-const symbolManipulators = symbolManipulatorsBase.flatMap((args) => createManipulators(args))
-
-function createModManipulator(
-  from: FromKeyParam,
-  to: ToEvent,
-  toIfAlone?: ToEvent
-) {
-  const manipulator = map(from, undefined, 'any')
-    .to({...to, lazy: true})
-  return toIfAlone ? manipulator.toIfAlone(toIfAlone) : manipulator
-}
-
-const modifierManipulatorsBase: Parameters<typeof createModManipulator>[] = [
-  ['spacebar', {key_code: 'left_shift'}, {key_code: 'spacebar'}], // Space => LeftShift with Space
-  ['japanese_pc_nfer', {key_code: 'left_command'}, {key_code: 'escape'}], // MuHenkan => LeftCommand with Escape
-  ['japanese_pc_xfer', {key_code: 'right_command'}, {key_code: 'return_or_enter'}], // Henkan => RightCommand with Return
-  ['japanese_pc_katakana', {
-    key_code: 'left_control',
-    modifiers: ['left_option', 'left_shift']
-  }, {key_code: 'f19'}], // Katakana => LeftControl + LeftOption + LeftShift with F14
-  ['left_option', {key_code: 'left_option'}, {key_code: 'tab'}], // LeftOption => LeftOption with Tab
-  ['right_option',
-    {key_code: 'right_option'},
-    {key_code: 'japanese_eisuu'}], // RightOption => RightOption with Eng
-  ['left_command', {key_code: 'left_control'}, {key_code: 'delete_or_backspace'}], // LeftCommand => LeftControl with Delete/Backspace
-  ['print_screen',
-    {key_code: 'right_control'},
-    {key_code: 'japanese_kana'}], // PrintScreen => RightControl with Kana
-];
-
-const modifierManipulators = modifierManipulatorsBase.map((args) => createModManipulator(...args));
-
-const specialManipulatorsBase: ManipulatorBase[] = [
-  {
-    from: 'grave_accent_and_tilde', defs: [
-      [undefined, {key_code: 'up_arrow'}],
-    ]
-  },
-  {
-    from: 'tab', defs: [
-      [undefined, {key_code: 'down_arrow'}],
-    ]
-  },
-  {
-    from: 'left_shift', defs: [
-      [undefined, {key_code: 'left_arrow'}],
-    ]
-  },
-  {
-    from: 'right_shift', defs: [
-      [undefined, {key_code: 'right_arrow'}],
-    ]
-  },
+  map('international1', 'shift').to('international3', 'option'), // Shift + _ => \
 ]
 
-const specialManipulators = specialManipulatorsBase.flatMap(args => createManipulators(args))
+// Modifier keys mapping
+const modifierDefinitions: Definition[] = [
+  map('spacebar').to('left_shift').toIfAlone('spacebar'), // Space => LeftShift with Space
+  map('japanese_pc_nfer').to('left_command').toIfAlone('escape'), // MuHenkan => LeftCommand with Escape
+  map('japanese_pc_xfer').to('right_command').toIfAlone('return_or_enter'), // Henkan => RightCommand with Return
+  map('japanese_pc_katakana').to('left_control', ['left_option', 'left_shift']).toIfAlone('f19'), // Katakana => LeftControl + LeftOption + LeftShift with F19
+  map('left_option').to('left_option').toIfAlone('tab'), // LeftOption => LeftOption with Tab
+  map('right_option').to('right_option').toIfAlone('japanese_eisuu'), // RightOption => RightOption with Eng
+  map('left_command').to('left_control').toIfAlone('delete_or_backspace'), // LeftCommand => LeftControl with Delete/Backspace
+  map('print_screen').to('right_control').toIfAlone('japanese_kana'), // PrintScreen => RightControl with Kana
+]
+
+const specialDefinitions: Definition[] = [
+  map('grave_accent_and_tilde').to('up_arrow'),      // ` => ↑
+  map('tab').to('down_arrow'),                       // Tab => ↓
+  map('left_shift').to('left_arrow'),                // LeftShift => ←
+  map('right_shift').to('right_arrow'),              // RightShift => →
+]
 
 // These temporal manipulators are for keeping mandatory keys when modding the layout.
-const temporalManipulators = []
+const temporalDefinitions: Definition[] = []
 
 // ! Change '--dry-run' to your Karabiner-Elements Profile name.
 // (--dry-run print the config json into console)
 // + Create a new profile if needed.
 writeToProfile('Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283', [
   rule('Key mapping').manipulators([
-    ...symbolManipulators,
-    ...modifierManipulators,
-    ...specialManipulators,
-    ...temporalManipulators,
+    ...symbolDefinitions,
+    ...modifierDefinitions,
+    ...specialDefinitions,
+    ...temporalDefinitions,
   ]),
 ])
