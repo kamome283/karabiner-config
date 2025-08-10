@@ -112,6 +112,7 @@ const manipulators = defsToManipulators(definitions)
 writeToProfile('Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283', [
   rule('Key mapping').manipulators(manipulators),
   rule('Middle click as a Ctrl').manipulators([
-    mapPointingButton('button3').to('left_control', undefined, {lazy: true})
+    mapPointingButton('button3', undefined, "any")
+      .to('left_control', undefined, {lazy: true})
   ])
 ])
