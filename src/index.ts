@@ -43,11 +43,9 @@ const modifierDefinitions: Definition[] = [
   [['spacebar'], ['left_shift'], ['spacebar']], // Space => LeftShift with Space
   [['japanese_pc_nfer'], ['left_command'], ['escape']], // MuHenkan => LeftCommand with Escape
   [['japanese_pc_xfer'], ['right_command'], ['return_or_enter']], // Henkan => RightCommand with Return
-  [['japanese_pc_katakana'], ['left_control', ['left_option', 'left_shift']], ['f19']], // Katakana => LeftControl + LeftOption + LeftShift with F19
-  [['left_option'], ['left_option'], ['tab']], // LeftOption => LeftOption with Tab
-  [['right_option'], ['right_option'], ['japanese_eisuu']], // RightOption => RightOption with Eng
-  [['left_command'], ['left_control'], ['delete_or_backspace']], // LeftCommand => LeftControl with Delete/Backspace
-  [['print_screen'], ['right_control'], ['japanese_kana']], // PrintScreen => RightControl with Kana
+  [['left_option'], ['left_option'], ['japanese_eisuu']], // LeftOption => LeftOption with Eng
+  [['japanese_pc_katakana'], ['right_option'], ['japanese_kana']], // Katakana => RightOption with Kana
+  [['left_shift'], ['left_shift', ['control', 'option']], ['f19']], // LeftShift => Meh with F19
 ]
 
 const laziedModifierDefinitions: Definition[] = modifierDefinitions.map(def => {
@@ -58,10 +56,8 @@ const laziedModifierDefinitions: Definition[] = modifierDefinitions.map(def => {
 })
 
 const specialDefinitions: Definition[] = [
-  [['grave_accent_and_tilde'], ['up_arrow']],      // ` => ↑
-  [['tab'], ['down_arrow']],                       // Tab => ↓
-  [['left_shift'], ['left_arrow']],                // LeftShift => ←
-  [['right_shift'], ['right_arrow']],              // RightShift => →
+  [['left_command'], ['delete_or_backspace']], // LeftShift => Delete/Backspace
+  [['print_screen'], ['tab']], // PrintScreen => Tab
 ]
 
 // These temporal manipulators are for keeping mandatory keys when modding the layout.
