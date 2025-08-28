@@ -61,14 +61,6 @@ const specialDefinitions: Definition[] = [
   [['left_command'], ['delete_or_backspace']], // LeftShift => Delete/Backspace
 ]
 
-const swappingDefinitions: Definition[] = [
-  [['h', ['command']], ['hyphen', ['command', 'option', 'control']]], // Cmd + H => Cmd Opt Ctrl: -
-  [['q', ['command']], ['q', ['command', 'option', 'control']]], // Cmd + Q => Cmd Opt Ctrl: Q
-  // セミコロンはオリジナルのUS配列で、変更後の hyphen のところにあたるキー
-  [['semicolon', ['command', 'option', 'control']], ['h', ['command']]], // Cmd Opt Ctrl: - => Cmd: H
-  [['q', ['command', 'control', 'option']], ['q', ['command']]], // Cmd Opt Ctrl: Q => Cmd: Q
-]
-
 // These temporal manipulators are for keeping mandatory keys when modding the layout.
 const temporalDefinitions: Definition[] = []
 
@@ -76,7 +68,6 @@ const definitions: Definition[] = [
   ...symbolDefinitions,
   ...laziedModifierDefinitions,
   ...specialDefinitions,
-  ...swappingDefinitions,
   ...temporalDefinitions,
 ]
 
