@@ -45,9 +45,9 @@ const symbolDefinitions: Definition[] = [
 // Modifier keys mapping
 // def: [[from], [as_modifier], [on_single_tap]]
 const modifierDefinitions: Definition[] = [
-  [['spacebar'], ['left_command'], ['spacebar']],
-  [['japanese_pc_nfer'], ['left_shift'], ['escape']],
-  [['japanese_pc_xfer'], ['right_shift'], ['return_or_enter']],
+  [['spacebar'], ['left_shift'], ['spacebar']],
+  [['japanese_pc_nfer'], ['left_command'], ['escape']],
+  [['japanese_pc_xfer'], ['right_command'], ['return_or_enter']],
   [['left_option'], ['left_option'], ['japanese_eisuu']],
   [['japanese_pc_katakana'], ['right_option'], ['japanese_kana']],
   [['tab'], ['left_command', ['control', 'option']]],
