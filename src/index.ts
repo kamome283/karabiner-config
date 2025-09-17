@@ -36,6 +36,10 @@ const symbolDefinitions: Definition[] = [
   [['non_us_pound', ['shift']], ['semicolon', ['shift']]], // Shift + ] => +
   // Bottom row
   [['international1', ['shift']], ['international3', ['option']]], // Shift + _ => \
+  // Side keys
+  [['left_shift'], ['tab']], // LeftShift => Tab
+  [['right_shift'], ['f19']], // RightShift => F19
+  [['left_command'], ['delete_or_backspace']], // LeftShift => Delete/Backspace
 ]
 
 // Modifier keys mapping
@@ -55,19 +59,12 @@ const laziedModifierDefinitions: Definition[] = modifierDefinitions.map(def => {
   return [from, [toKey, toModifiers, laziedOptions], toIfAlone] satisfies Definition
 })
 
-const specialDefinitions: Definition[] = [
-  [['left_shift'], ['tab']], // LeftShift => Tab
-  [['right_shift'], ['f19']], // RightShift => F19
-  [['left_command'], ['delete_or_backspace']], // LeftShift => Delete/Backspace
-]
-
 // These temporal manipulators are for keeping mandatory keys when modding the layout.
 const temporalDefinitions: Definition[] = []
 
 const definitions: Definition[] = [
   ...symbolDefinitions,
   ...laziedModifierDefinitions,
-  ...specialDefinitions,
   ...temporalDefinitions,
 ]
 
