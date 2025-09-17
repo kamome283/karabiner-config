@@ -18,8 +18,8 @@ type Definition = [From: FromDefinition, To: ToDefinition, ToIfAlone?: ToDefinit
 const symbolDefinitions: Definition[] = [
   // Numeric row
   [['2', ['shift']], ['open_bracket']], // Shift + 2 => @
-  [['7', ['shift']], ['international3', ['shift']]], // Shift + 7 => |
-  [['0', ['shift']], ['open_bracket', ['shift']]], // Shift + 0 => `
+  [['7', ['shift']], ['open_bracket', ['shift']]], // Shift + 7 => `
+  [['0', ['shift']], ['international3', ['shift']]], // Shift + 0 => |
   [['hyphen'], ['equal_sign']], // - => ^
   [['hyphen', ['shift']], ['equal_sign', ['shift']]], // Shift + - => ~
   // Top row
@@ -35,31 +35,26 @@ const symbolDefinitions: Definition[] = [
   [['non_us_pound'], ['semicolon']], // ] => ;
   [['non_us_pound', ['shift']], ['semicolon', ['shift']]], // Shift + ] => +
   // Bottom row
+  [['left_shift'], ['delete_or_backspace']],
   [['international1', ['shift']], ['international3', ['option']]], // Shift + _ => \
 ]
 
 // Modifier keys mapping
+// def: [[from], [as_modifier], [on_single_tap]]
 const modifierDefinitions: Definition[] = [
-  [['spacebar'], ['left_command'], ['spacebar']], // Space => LeftCommand with Space
-  [['japanese_pc_nfer'], ['left_shift'], ['escape']], // MuHenkan => LeftShift with Escape
-  [['japanese_pc_xfer'], ['right_shift'], ['return_or_enter']], // Henkan => RightShift with Return
-  [['left_option'], ['left_option'], ['japanese_eisuu']], // LeftOption => LeftOption with Eng
-  [['japanese_pc_katakana'], ['right_option'], ['japanese_kana']], // Katakana => RightOption with Kana
-  [['tab'], ['left_command', ['control', 'option']]], // Tab => LeftCommand + Control + Option
+  [['spacebar'], ['left_shift'], ['spacebar']],
+  [['japanese_pc_nfer'], ['left_command'], ['escape']],
+  [['japanese_pc_xfer'], ['right_command'], ['return_or_enter']],
+  [['left_option'], ['left_option'], ['japanese_eisuu']],
+  [['japanese_pc_katakana'], ['right_option'], ['japanese_kana']],
 ]
 
 const laziedModifierDefinitions: Definition[] = modifierDefinitions.map(def => {
   const [from, to, toIfAlone] = def
   const [toKey, toModifiers, toEventOptions] = to
-  const laziedOptions: ToEventOptions = {...toEventOptions, lazy: true }
+  const laziedOptions: ToEventOptions = {...toEventOptions, lazy: true}
   return [from, [toKey, toModifiers, laziedOptions], toIfAlone] satisfies Definition
 })
-
-const specialDefinitions: Definition[] = [
-  [['left_shift'], ['tab']], // LeftShift => Tab
-  [['right_shift'], ['f19']], // RightShift => F19
-  [['left_command'], ['delete_or_backspace']], // LeftShift => Delete/Backspace
-]
 
 // These temporal manipulators are for keeping mandatory keys when modding the layout.
 const temporalDefinitions: Definition[] = []
@@ -67,7 +62,6 @@ const temporalDefinitions: Definition[] = []
 const definitions: Definition[] = [
   ...symbolDefinitions,
   ...laziedModifierDefinitions,
-  ...specialDefinitions,
   ...temporalDefinitions,
 ]
 
