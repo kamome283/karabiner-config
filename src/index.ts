@@ -52,7 +52,7 @@ const modifierDefinitions: Definition[] = [
 const laziedModifierDefinitions: Definition[] = modifierDefinitions.map(def => {
   const [from, to, toIfAlone] = def
   const [toKey, toModifiers, toEventOptions] = to
-  const laziedOptions: ToEventOptions = {...toEventOptions, lazy: true }
+  const laziedOptions: ToEventOptions = {...toEventOptions, lazy: true}
   return [from, [toKey, toModifiers, laziedOptions], toIfAlone] satisfies Definition
 })
 
