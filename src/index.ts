@@ -50,7 +50,6 @@ const modifierDefinitions: Definition[] = [
   [['japanese_pc_xfer'], ['right_command'], ['return_or_enter']],
   [['left_option'], ['left_option'], ['japanese_eisuu']],
   [['japanese_pc_katakana'], ['right_option'], ['japanese_kana']],
-  [['tab'], ['left_command', ['control', 'option']]],
 ]
 
 const laziedModifierDefinitions: Definition[] = modifierDefinitions.map(def => {
