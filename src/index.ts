@@ -38,7 +38,6 @@ const symbolDefinitions: Definition[] = [
   [['international1', ['shift']], ['international3', ['option']]], // Shift + _ => \
   // Side keys
   [['left_shift'], ['tab']], // LeftShift => Tab
-  [['right_shift'], ['f19']], // RightShift => F19
   [['left_command'], ['delete_or_backspace']], // LeftShift => Delete/Backspace
 ]
 
