@@ -35,9 +35,8 @@ const symbolDefinitions: Definition[] = [
   [['non_us_pound'], ['semicolon']], // ] => ;
   [['non_us_pound', ['shift']], ['semicolon', ['shift']]], // Shift + ] => +
   // Bottom row
+  [['left_shift'], ['delete_or_backspace']],
   [['international1', ['shift']], ['international3', ['option']]], // Shift + _ => \
-  // Side keys
-  [['left_command'], ['delete_or_backspace']], // LeftShift => Delete/Backspace
 ]
 
 // Modifier keys mapping
