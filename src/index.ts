@@ -43,13 +43,14 @@ const symbolDefinitions: Definition[] = [
 ]
 
 // Modifier keys mapping
+// def: [[from], [as_modifier], [on_single_tap]]
 const modifierDefinitions: Definition[] = [
-  [['spacebar'], ['left_command'], ['spacebar']], // Space => LeftCommand with Space
-  [['japanese_pc_nfer'], ['left_shift'], ['escape']], // MuHenkan => LeftShift with Escape
-  [['japanese_pc_xfer'], ['right_shift'], ['return_or_enter']], // Henkan => RightShift with Return
-  [['left_option'], ['left_option'], ['japanese_eisuu']], // LeftOption => LeftOption with Eng
-  [['japanese_pc_katakana'], ['right_option'], ['japanese_kana']], // Katakana => RightOption with Kana
-  [['tab'], ['left_command', ['control', 'option']]], // Tab => LeftCommand + Control + Option
+  [['spacebar'], ['left_command'], ['spacebar']],
+  [['japanese_pc_nfer'], ['left_shift'], ['escape']],
+  [['japanese_pc_xfer'], ['right_shift'], ['return_or_enter']],
+  [['left_option'], ['left_option'], ['japanese_eisuu']],
+  [['japanese_pc_katakana'], ['right_option'], ['japanese_kana']],
+  [['tab'], ['left_command', ['control', 'option']]],
 ]
 
 const laziedModifierDefinitions: Definition[] = modifierDefinitions.map(def => {
