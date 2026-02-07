@@ -17,23 +17,21 @@ type Definition = [From: FromDefinition, To: ToDefinition, ToIfAlone?: ToDefinit
 
 const symbolDefinitions: Definition[] = [
   // Numeric row
-  [['2', ['shift']], ['open_bracket']], // Shift + 2 => @
-  [['7', ['shift']], ['open_bracket', ['shift']]], // Shift + 7 => `
+  [['grave_accent_and_tilde'], ['equal_sign']], // ZenHan => ^
+  [['grave_accent_and_tilde', 'shift'], ['equal_sign', 'shift']], // Shift + ZenHan => ~
+  [["2", "shift"], ["semicolon", "shift"]], // Shift + 2 => +
   [['0', ['shift']], ['international3', ['shift']]], // Shift + 0 => |
-  [['hyphen'], ['equal_sign']], // - => ^
-  [['hyphen', ['shift']], ['equal_sign', ['shift']]], // Shift + - => ~
   // Top row
   [['open_bracket'], ['close_bracket']], // @ => [
   [['open_bracket', ['shift']], ['close_bracket', ['shift']]], // Shift + @ => {
   [['close_bracket'], ['non_us_pound']], // [ => ]
   [['close_bracket', ['shift']], ['non_us_pound', ['shift']]], // Shift + [ => }
   // Middle row
-  [['caps_lock'], ['7', ['shift']]], // CapsLock => '
-  [['caps_lock', ['shift']], ['2', ['shift']]], // Shift + CapsLock => "
-  [['semicolon'], ['hyphen']], // ; => -
-  [['semicolon', ['shift']], ['hyphen', ['shift']]], // Shift + ; => =
-  [['non_us_pound'], ['semicolon']], // ] => ;
-  [['non_us_pound', ['shift']], ['semicolon', ['shift']]], // Shift + ] => +
+  [['caps_lock'], ['hyphen']], // CapsLock => -
+  [['caps_lock', 'shift'], ['hyphen', 'shift']], // CapsLock => =
+  [["semicolon", "shift"], ["2", "shift"]], // Shift + ; => "
+  [['non_us_pound'], ['open_bracket']], // ] => @
+  [['non_us_pound', 'shift'], ['open_bracket', "shift"]], // Shift + ] => `
   // Bottom row
   [['left_shift'], ['delete_or_backspace']],
   [['international1', ['shift']], ['international3', ['option']]], // Shift + _ => \
@@ -102,7 +100,7 @@ function defsToManipulators(definitions: Definition[]): ManipulatorBuilder[] {
 const manipulators = defsToManipulators(definitions)
 
 // ! Change '--dry-run' to your Karabiner-Elements Profile name.
-// (--dry-run print the config json into console)
+// (--dry-run print the config JSON into console)
 // + Create a new profile if needed.
 writeToProfile('Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283', [
   rule('Key mapping').manipulators(manipulators),
