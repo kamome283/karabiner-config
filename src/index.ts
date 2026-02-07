@@ -4,12 +4,14 @@
 import {
   FromKeyParam,
   FromModifierParam,
-  map, mapPointingButton,
+  map,
+  mapPointingButton,
   ModifierParam,
-  rule, ToEventOptions,
+  rule,
+  ToEventOptions,
   ToKeyParam,
   writeToProfile,
-} from 'karabiner.ts'
+} from "karabiner.ts";
 
 type FromDefinition = [FromKeyParam: FromKeyParam, FromModifierParam?: FromModifierParam]
 type ToDefinition = [ToKeyParam: ToKeyParam, ModifierParam?: ModifierParam, ToEventOptions?: ToEventOptions]
@@ -17,95 +19,95 @@ type Definition = [From: FromDefinition, To: ToDefinition, ToIfAlone?: ToDefinit
 
 const symbolDefinitions: Definition[] = [
   // Numeric row
-  [['grave_accent_and_tilde'], ['equal_sign']], // ZenHan => ^
-  [['grave_accent_and_tilde', 'shift'], ['equal_sign', 'shift']], // Shift + ZenHan => ~
+  [["grave_accent_and_tilde"], ["equal_sign"]], // ZenHan => ^
+  [["grave_accent_and_tilde", "shift"], ["equal_sign", "shift"]], // Shift + ZenHan => ~
   [["2", "shift"], ["semicolon", "shift"]], // Shift + 2 => +
-  [['0', ['shift']], ['international3', ['shift']]], // Shift + 0 => |
+  [["0", ["shift"]], ["international3", ["shift"]]], // Shift + 0 => |
   // Top row
-  [['open_bracket'], ['close_bracket']], // @ => [
-  [['open_bracket', ['shift']], ['close_bracket', ['shift']]], // Shift + @ => {
-  [['close_bracket'], ['non_us_pound']], // [ => ]
-  [['close_bracket', ['shift']], ['non_us_pound', ['shift']]], // Shift + [ => }
+  [["open_bracket"], ["close_bracket"]], // @ => [
+  [["open_bracket", ["shift"]], ["close_bracket", ["shift"]]], // Shift + @ => {
+  [["close_bracket"], ["non_us_pound"]], // [ => ]
+  [["close_bracket", ["shift"]], ["non_us_pound", ["shift"]]], // Shift + [ => }
   // Middle row
-  [['caps_lock'], ['hyphen']], // CapsLock => -
-  [['caps_lock', 'shift'], ['hyphen', 'shift']], // CapsLock => =
+  [["caps_lock"], ["hyphen"]], // CapsLock => -
+  [["caps_lock", "shift"], ["hyphen", "shift"]], // CapsLock => =
   [["semicolon", "shift"], ["2", "shift"]], // Shift + ; => "
-  [['non_us_pound'], ['open_bracket']], // ] => @
-  [['non_us_pound', 'shift'], ['open_bracket', "shift"]], // Shift + ] => `
+  [["non_us_pound"], ["open_bracket"]], // ] => @
+  [["non_us_pound", "shift"], ["open_bracket", "shift"]], // Shift + ] => `
   // Bottom row
-  [['left_shift'], ['delete_or_backspace']],
-  [['international1', ['shift']], ['international3', ['option']]], // Shift + _ => \
-]
+  [["left_shift"], ["delete_or_backspace"]],
+  [["international1", ["shift"]], ["international3", ["option"]]], // Shift + _ => \
+];
 
 // Modifier keys mapping
 // def: [[from], [as_modifier], [on_single_tap]]
 const modifierDefinitions: Definition[] = [
-  [['spacebar'], ['left_shift'], ['spacebar']],
-  [['japanese_pc_nfer'], ['left_command'], ['escape']],
-  [['japanese_pc_xfer'], ['right_command'], ['return_or_enter']],
-  [['left_option'], ['left_option'], ['japanese_eisuu']],
-  [['japanese_pc_katakana'], ['right_option'], ['japanese_kana']],
-]
+  [["spacebar"], ["left_shift"], ["spacebar"]],
+  [["japanese_pc_nfer"], ["left_command"], ["escape"]],
+  [["japanese_pc_xfer"], ["right_command"], ["return_or_enter"]],
+  [["left_option"], ["left_option"], ["japanese_eisuu"]],
+  [["japanese_pc_katakana"], ["right_option"], ["japanese_kana"]],
+];
 
 const laziedModifierDefinitions: Definition[] = modifierDefinitions.map(def => {
-  const [from, to, toIfAlone] = def
-  const [toKey, toModifiers, toEventOptions] = to
-  const laziedOptions: ToEventOptions = {...toEventOptions, lazy: true}
-  return [from, [toKey, toModifiers, laziedOptions], toIfAlone] satisfies Definition
-})
+  const [from, to, toIfAlone] = def;
+  const [toKey, toModifiers, toEventOptions] = to;
+  const laziedOptions: ToEventOptions = {...toEventOptions, lazy: true};
+  return [from, [toKey, toModifiers, laziedOptions], toIfAlone] satisfies Definition;
+});
 
 // These temporal manipulators are for keeping mandatory keys when modding the layout.
-const temporalDefinitions: Definition[] = []
+const temporalDefinitions: Definition[] = [];
 
 const definitions: Definition[] = [
   ...symbolDefinitions,
   ...laziedModifierDefinitions,
   ...temporalDefinitions,
-]
+];
 
 type ManipulatorBuilder = ReturnType<typeof map>
 
 // 既存の実装を流用しているので、ShiftなしとShiftありのような1つの修飾子との衝突は解決できる。
 // ただ、修飾子無しとShiftありとOptionありのような2つ以上の衝突がある場合はうまく解決できないような気がする。
 function defsToManipulators(definitions: Definition[]): ManipulatorBuilder[] {
-  const groupedByFromKey: Map<FromKeyParam, [FromModifierParam: FromModifierParam | undefined, Definition: Definition][]> = new Map()
+  const groupedByFromKey: Map<FromKeyParam, [FromModifierParam: FromModifierParam | undefined, Definition: Definition][]> = new Map();
   for (const def of definitions) {
-    const [from] = def
-    const [fromKey, fromModifiers] = from
-    let group = groupedByFromKey.get(fromKey)
+    const [from] = def;
+    const [fromKey, fromModifiers] = from;
+    let group = groupedByFromKey.get(fromKey);
     if (!group) {
-      group = []
-      groupedByFromKey.set(fromKey, group)
+      group = [];
+      groupedByFromKey.set(fromKey, group);
     }
-    group.push([fromModifiers, def])
+    group.push([fromModifiers, def]);
   }
 
-  const manipulators: ManipulatorBuilder[] = []
+  const manipulators: ManipulatorBuilder[] = [];
   for (const group of groupedByFromKey) {
-    const [_, modsAndDefs] = group
-    const usedModifiers = modsAndDefs.flatMap(([fromModifier, _]) => fromModifier)
-    const allModifiers = ['shift', 'option', 'control', 'command'] as const
-    const unusedModifiers = allModifiers.filter(mod => !usedModifiers.includes(mod))
+    const [_, modsAndDefs] = group;
+    const usedModifiers = modsAndDefs.flatMap(([fromModifier, _]) => fromModifier);
+    const allModifiers = ["shift", "option", "control", "command"] as const;
+    const unusedModifiers = allModifiers.filter(mod => !usedModifiers.includes(mod));
     for (const [_, definition] of modsAndDefs) {
-      const [from, to, toIfAlone] = definition
-      const [fromKey, fromModifiers] = from
-      const baseManipulator = map(fromKey, fromModifiers, unusedModifiers).to(to[0], to[1], to[2])
-      const manipulator = toIfAlone ? baseManipulator.toIfAlone(toIfAlone[0], toIfAlone[1], toIfAlone[2]) : baseManipulator
-      manipulators.push(manipulator)
+      const [from, to, toIfAlone] = definition;
+      const [fromKey, fromModifiers] = from;
+      const baseManipulator = map(fromKey, fromModifiers, unusedModifiers).to(to[0], to[1], to[2]);
+      const manipulator = toIfAlone ? baseManipulator.toIfAlone(toIfAlone[0], toIfAlone[1], toIfAlone[2]) : baseManipulator;
+      manipulators.push(manipulator);
     }
   }
-  return manipulators
+  return manipulators;
 }
 
-const manipulators = defsToManipulators(definitions)
+const manipulators = defsToManipulators(definitions);
 
 // ! Change '--dry-run' to your Karabiner-Elements Profile name.
 // (--dry-run print the config JSON into console)
 // + Create a new profile if needed.
-writeToProfile('Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283', [
-  rule('Key mapping').manipulators(manipulators),
-  rule('Middle click as a Ctrl').manipulators([
-    mapPointingButton('button3', undefined, "any")
-      .to('left_control', undefined, {lazy: true})
-  ])
-])
+writeToProfile("Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283", [
+  rule("Key mapping").manipulators(manipulators),
+  rule("Middle click as a Ctrl").manipulators([
+    mapPointingButton("button3", undefined, "any")
+      .to("left_control", undefined, {lazy: true}),
+  ]),
+]);
