@@ -17,11 +17,9 @@ type Definition = [From: FromDefinition, To: ToDefinition, ToIfAlone?: ToDefinit
 
 const symbolDefinitions: Definition[] = [
   // Numeric row
-  [['2', ['shift']], ['open_bracket']], // Shift + 2 => @
-  [['7', ['shift']], ['open_bracket', ['shift']]], // Shift + 7 => `
+  [['grave_accent_and_tilde'], ['equal_sign']], // ZenHan => ^
+  [['grave_accent_and_tilde', 'shift'], ['equal_sign', 'shift']], // Shift + ZenHan => ~
   [['0', ['shift']], ['international3', ['shift']]], // Shift + 0 => |
-  [['hyphen'], ['equal_sign']], // - => ^
-  [['hyphen', ['shift']], ['equal_sign', ['shift']]], // Shift + - => ~
   // Top row
   [['open_bracket'], ['close_bracket']], // @ => [
   [['open_bracket', ['shift']], ['close_bracket', ['shift']]], // Shift + @ => {
