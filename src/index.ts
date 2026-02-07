@@ -26,12 +26,10 @@ const symbolDefinitions: Definition[] = [
   [['close_bracket'], ['non_us_pound']], // [ => ]
   [['close_bracket', ['shift']], ['non_us_pound', ['shift']]], // Shift + [ => }
   // Middle row
-  [['caps_lock'], ['7', ['shift']]], // CapsLock => '
-  [['caps_lock', ['shift']], ['2', ['shift']]], // Shift + CapsLock => "
-  [['semicolon'], ['hyphen']], // ; => -
-  [['semicolon', ['shift']], ['hyphen', ['shift']]], // Shift + ; => =
-  [['non_us_pound'], ['semicolon']], // ] => ;
-  [['non_us_pound', ['shift']], ['semicolon', ['shift']]], // Shift + ] => +
+  [['caps_lock'], ['hyphen']], // CapsLock => -
+  [['caps_lock', 'shift'], ['hyphen', 'shift']], // CapsLock => =
+  [['non_us_pound'], ['open_bracket']], // ] => @
+  [['non_us_pound', 'shift'], ['open_bracket', "shift"]], // Shift + ] => `
   // Bottom row
   [['left_shift'], ['delete_or_backspace']],
   [['international1', ['shift']], ['international3', ['option']]], // Shift + _ => \
