@@ -10,7 +10,7 @@ import {
 } from "karabiner.ts";
 
 type FromDefinition = [FromKeyParam: FromKeyParam, FromModifierParam?: FromModifierParam]
-type ToDefinition = [ToKeyParam: ToKeyParam, ModifierParam?: ModifierParam, ToEventOptions?: ToEventOptions]
+export type ToDefinition = [ToKeyParam: ToKeyParam, ModifierParam?: ModifierParam, ToEventOptions?: ToEventOptions]
 export type Definition = [From: FromDefinition, To: ToDefinition, ToIfAlone?: ToDefinition]
 
 const symbolDefinitions: Definition[] = [
