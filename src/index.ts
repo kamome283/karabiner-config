@@ -100,7 +100,7 @@ function defsToManipulators(definitions: Definition[]): ManipulatorBuilder[] {
 const manipulators = defsToManipulators(definitions)
 
 // ! Change '--dry-run' to your Karabiner-Elements Profile name.
-// (--dry-run print the config json into console)
+// (--dry-run print the config JSON into console)
 // + Create a new profile if needed.
 writeToProfile('Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283', [
   rule('Key mapping').manipulators(manipulators),
