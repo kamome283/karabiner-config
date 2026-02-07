@@ -10,10 +10,10 @@ import {
 } from "karabiner.ts";
 
 type FromDefinition = [FromKeyParam: FromKeyParam, FromModifierParam?: FromModifierParam]
-type ToDefinition = [ToKeyParam: ToKeyParam, ModifierParam?: ModifierParam, ToEventOptions?: ToEventOptions]
+export type ToDefinition = [ToKeyParam: ToKeyParam, ModifierParam?: ModifierParam, ToEventOptions?: ToEventOptions]
 export type Definition = [From: FromDefinition, To: ToDefinition, ToIfAlone?: ToDefinition]
 
-const symbolDefinitions: Definition[] = [
+export const definitions: Definition[] = [
   // Numeric row
   [["grave_accent_and_tilde"], ["equal_sign"]], // ZenHan => ^
   [["grave_accent_and_tilde", "shift"], ["equal_sign", "shift"]], // Shift + ZenHan => ~
@@ -33,30 +33,10 @@ const symbolDefinitions: Definition[] = [
   // Bottom row
   [["left_shift"], ["delete_or_backspace"]],
   [["international1", ["shift"]], ["international3", ["option"]]], // Shift + _ => \
-];
-
-// Modifier keys mapping
-// def: [[from], [as_modifier], [on_single_tap]]
-const modifierDefinitions: Definition[] = [
+  // Modifier keys
   [["spacebar"], ["left_shift"], ["spacebar"]],
   [["japanese_pc_nfer"], ["left_command"], ["escape"]],
   [["japanese_pc_xfer"], ["right_command"], ["return_or_enter"]],
   [["left_option"], ["left_option"], ["japanese_eisuu"]],
   [["japanese_pc_katakana"], ["right_option"], ["japanese_kana"]],
-];
-
-const laziedModifierDefinitions: Definition[] = modifierDefinitions.map(def => {
-  const [from, to, toIfAlone] = def;
-  const [toKey, toModifiers, toEventOptions] = to;
-  const laziedOptions: ToEventOptions = {...toEventOptions, lazy: true};
-  return [from, [toKey, toModifiers, laziedOptions], toIfAlone] satisfies Definition;
-});
-
-// These temporal manipulators are for keeping mandatory keys when modding the layout.
-const temporalDefinitions: Definition[] = [];
-
-export const definitions: Definition[] = [
-  ...symbolDefinitions,
-  ...laziedModifierDefinitions,
-  ...temporalDefinitions,
 ];
