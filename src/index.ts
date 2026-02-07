@@ -4,11 +4,10 @@ import {defsToManipulators} from "./manipulatorCreation";
 
 const manipulators = defsToManipulators(definitions);
 
-// ! Change '--dry-run' to your Karabiner-Elements Profile name.
-// (--dry-run print the config JSON into console)
-// + Create a new profile if needed.
+// `npm run build`で設定の書き換えを行う
 writeToProfile("Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283", [
   rule("Key mapping").manipulators(manipulators),
+  // トラックポイントのボタンに関する設定
   rule("Middle click as a Ctrl").manipulators([
     mapPointingButton("button3", undefined, "any")
       .to("left_control", undefined, {lazy: true}),
