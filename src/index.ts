@@ -19,6 +19,7 @@ const symbolDefinitions: Definition[] = [
   // Numeric row
   [['grave_accent_and_tilde'], ['equal_sign']], // ZenHan => ^
   [['grave_accent_and_tilde', 'shift'], ['equal_sign', 'shift']], // Shift + ZenHan => ~
+  [["2", "shift"], ["semicolon", "shift"]], // Shift + 2 => +
   [['0', ['shift']], ['international3', ['shift']]], // Shift + 0 => |
   // Top row
   [['open_bracket'], ['close_bracket']], // @ => [
@@ -28,6 +29,7 @@ const symbolDefinitions: Definition[] = [
   // Middle row
   [['caps_lock'], ['hyphen']], // CapsLock => -
   [['caps_lock', 'shift'], ['hyphen', 'shift']], // CapsLock => =
+  [["semicolon", "shift"], ["2", "shift"]], // Shift + ; => "
   [['non_us_pound'], ['open_bracket']], // ] => @
   [['non_us_pound', 'shift'], ['open_bracket', "shift"]], // Shift + ] => `
   // Bottom row
