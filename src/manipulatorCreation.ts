@@ -1,5 +1,5 @@
 import {Definition, ToDefinition} from "./definitions";
-import {map} from "karabiner.ts";
+import {FromModifierParam, map} from "karabiner.ts";
 
 type ManipulatorBuilder = ReturnType<typeof map>
 
@@ -16,7 +16,7 @@ export class ManipulatorsGeneratorFactory {
 }
 
 export class ManipulatorsGenerator {
-  static readonly AllModifiers = ["shift", "option", "control", "command"] as const;
+  static readonly AllModifiers = ["left_shift", "left_option", "left_control", "right_command"] satisfies FromModifierParam[];
   private readonly lazyWhenTapAndHold: boolean;
   private readonly definitions: Definition[];
 
