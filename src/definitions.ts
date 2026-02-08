@@ -36,8 +36,8 @@ export const definitions: Definition[] = [
   [["international1", ["shift"]], ["international3", ["option"]]], // Shift + _ => \
   // Modifier keys
   [["spacebar"], ["left_shift"], ["spacebar"]],
-  [["japanese_pc_nfer"], ["left_command"], ["escape"]],
+  [["japanese_pc_nfer"], ["right_command"], ["escape"]],
   [["japanese_pc_xfer"], ["right_command"], ["return_or_enter"]],
   [["left_option"], ["left_option"], ["japanese_eisuu"]],
-  [["japanese_pc_katakana"], ["right_option"], ["japanese_kana"]],
+  [["japanese_pc_katakana"], ["left_option"], ["japanese_kana"]],
 ];
