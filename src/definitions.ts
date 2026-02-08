@@ -16,24 +16,24 @@ export type Definition = [From: FromDefinition, To: ToDefinition, ToIfAlone?: To
 export const definitions: Definition[] = [
   // Numeric row
   [["grave_accent_and_tilde"], ["equal_sign"]], // ZenHan => ^
-  [["grave_accent_and_tilde", "shift"], ["equal_sign", "shift"]], // Shift + ZenHan => ~
-  [["2", "shift"], ["semicolon", "shift"]], // Shift + 2 => +
-  [["0", ["shift"]], ["international3", ["shift"]]], // Shift + 0 => |
+  [["grave_accent_and_tilde", "left_shift"], ["equal_sign", "shift"]], // Shift + ZenHan => ~
+  [["2", "left_shift"], ["semicolon", "shift"]], // Shift + 2 => +
+  [["0", ["left_shift"]], ["international3", ["shift"]]], // Shift + 0 => |
   // Top row
   [["open_bracket"], ["close_bracket"]], // @ => [
-  [["open_bracket", ["shift"]], ["close_bracket", ["shift"]]], // Shift + @ => {
+  [["open_bracket", ["left_shift"]], ["close_bracket", ["shift"]]], // Shift + @ => {
   [["close_bracket"], ["non_us_pound"]], // [ => ]
-  [["close_bracket", ["shift"]], ["non_us_pound", ["shift"]]], // Shift + [ => }
+  [["close_bracket", ["left_shift"]], ["non_us_pound", ["shift"]]], // Shift + [ => }
   // Middle row
   [["caps_lock"], ["semicolon"]], // CapsLock => ;
-  [["caps_lock", "shift"], ["2", "shift"]], // CapsLock => "
+  [["caps_lock", "left_shift"], ["2", "shift"]], // CapsLock => "
   [["semicolon"], ["hyphen"]], // ; => -
-  [["semicolon", "shift"], ["hyphen", "shift"]], // Shift + ; => =
+  [["semicolon", "left_shift"], ["hyphen", "shift"]], // Shift + ; => =
   [["non_us_pound"], ["open_bracket"]], // ] => @
-  [["non_us_pound", "shift"], ["open_bracket", "shift"]], // Shift + ] => `
+  [["non_us_pound", "left_shift"], ["open_bracket", "shift"]], // Shift + ] => `
   // Bottom row
   [["left_shift"], ["delete_or_backspace"]],
-  [["international1", ["shift"]], ["international3", ["option"]]], // Shift + _ => \
+  [["international1", ["left_shift"]], ["international3", ["option"]]], // Shift + _ => \
   // Modifier keys
   [["spacebar"], ["left_shift"], ["spacebar"]],
   [["japanese_pc_nfer"], ["right_command"], ["escape"]],
