@@ -4,10 +4,9 @@ import {FromModifierParam, map} from "karabiner.ts";
 type ManipulatorBuilder = ReturnType<typeof map>
 
 export class ManipulatorsGeneratorFactory {
-  private readonly lazyWhenTapAndHold: boolean;
-
-  public constructor(lazyWhenTapAndHold: boolean) {
-    this.lazyWhenTapAndHold = lazyWhenTapAndHold;
+  public constructor(
+    private readonly lazyWhenTapAndHold: boolean,
+  ) {
   }
 
   public create(definitions: Definition[]): ManipulatorsGenerator {
@@ -17,12 +16,11 @@ export class ManipulatorsGeneratorFactory {
 
 export class ManipulatorsGenerator {
   static readonly AllModifiers = ["left_shift", "left_option", "left_control", "right_command"] satisfies FromModifierParam[];
-  private readonly lazyWhenTapAndHold: boolean;
-  private readonly definitions: Definition[];
 
-  public constructor(lazyWhenTapAndHold: boolean, definitions: Definition[]) {
-    this.lazyWhenTapAndHold = lazyWhenTapAndHold;
-    this.definitions = definitions;
+  public constructor(
+    private readonly lazyWhenTapAndHold: boolean,
+    private readonly definitions: Definition[],
+  ) {
   }
 
   public generate(): ManipulatorBuilder[] {
