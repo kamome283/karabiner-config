@@ -1,6 +1,6 @@
 import {mapPointingButton, rule, writeToProfile} from "karabiner.ts";
 import {definitions} from "./definitions";
-import {ManipulatorsGeneratorFactory} from "./manipulatorCreation";
+import {ManipulatorsGeneratorFactory} from "./manipulator-creation";
 
 const manipulators = new ManipulatorsGeneratorFactory(true).create(definitions).generate();
 
