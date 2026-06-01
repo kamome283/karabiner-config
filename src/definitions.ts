@@ -29,9 +29,10 @@ export const definitions: Definition[] = [
   [["close_bracket"], ["non_us_pound"]], // [ => ]
   [["close_bracket", ["left_shift"]], ["non_us_pound", ["shift"]]], // Shift + [ => }
   // Middle row
-  [["caps_lock"], ["hyphen"]], // CapsLock => -
-  [["caps_lock", "left_shift"], ["hyphen", "shift"]], // CapsLock => =
-  [["semicolon", "left_shift"], ["quote"]], // Shift + ; => :
+  [["caps_lock"], ["semicolon"]], // CapsLock => ;
+  [["caps_lock", "left_shift"], ["quote"]], // CapsLock => :
+  [["semicolon"], ["hyphen"]], // ; => -
+  [["semicolon", "left_shift"], ["hyphen", "shift"]], // Shift + ; => =
   [["quote"], ["7", "shift"]], // : => '
   [["quote", "left_shift"], ["2", "shift"]], // Shift + => "
   [["non_us_pound"], ["open_bracket", "shift"]], // ] => `
