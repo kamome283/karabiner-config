@@ -21,8 +21,8 @@ export const definitions: Definition[] = [
   [["8", "left_shift"], ["quote", "shift"]],
   [["9", "left_shift"], ["8", "shift"]],
   [["0", "left_shift"], ["9", "shift"]],
-  [["hyphen"], ["semicolon", "shift"]],
-  [["hyphen", "left_shift"], ["international1"]],
+  [["hyphen"], ["international1"]], // - => _
+  [["hyphen", "left_shift"], ["semicolon", "shift"]], // Shift + - => +
   // Top row
   [["open_bracket"], ["close_bracket"]], // @ => [
   [["open_bracket", ["left_shift"]], ["close_bracket", ["shift"]]], // Shift + @ => {
