@@ -2,7 +2,7 @@ import {mapPointingButton, rule, writeToProfile} from "karabiner.ts";
 import {definitions} from "./definitions";
 import {ManipulatorsGeneratorFactory} from "./manipulator-creation";
 
-const manipulators = new ManipulatorsGeneratorFactory(true).create(definitions).generate();
+const manipulators = new ManipulatorsGeneratorFactory(false).create(definitions).generate();
 
 // `npm run build`で設定の書き換えを行う
 writeToProfile("Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283", [
@@ -10,6 +10,6 @@ writeToProfile("Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283", [
   // トラックポイントのボタンに関する設定
   rule("Middle click as a Ctrl").manipulators([
     mapPointingButton("button3", undefined, "any")
-      .to("left_control", undefined, {lazy: true}),
+      .to("right_control", undefined, {lazy: true}),
   ]),
 ]);
