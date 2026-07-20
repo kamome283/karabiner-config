@@ -1,11 +1,6 @@
 import {ManipulatorBuilder, map, ModifierParam} from "karabiner.ts";
 import {Definition} from "./definitions";
 
-export type Config = {
-  lazy: boolean,
-  definitions: Definition[]
-}
-
 type DefinitionsGroup = {
   fromKey: Definition["from"]["key"],
   definitions: Definition[],
@@ -18,12 +13,12 @@ const basicMods = [
   "right_command"
 ] satisfies ModifierParam[];
 
-const processGroup = (lazy: boolean, group: DefinitionsGroup): ManipulatorBuilder[] => {
+const processGroup = (group: DefinitionsGroup): ManipulatorBuilder[] => {
   const mandatoryMods = group.definitions.flatMap(def => def.from.mod);
   const optionalMods = basicMods.filter(mod => !mandatoryMods.includes(mod));
 
   return group.definitions.map(def => {
-    const toOptions = lazy && (def.ifAlone !== undefined) ?
+    const toOptions = def.ifAlone !== undefined ?
       {...def.to.options, lazy: true}
       : def.to.options
     const manipulator =
@@ -35,13 +30,13 @@ const processGroup = (lazy: boolean, group: DefinitionsGroup): ManipulatorBuilde
   })
 }
 
-export const constructManipulators = (config: Config): ManipulatorBuilder[] => {
+export const constructManipulators = (definitions: Definition[]): ManipulatorBuilder[] => {
   const groups = Map
-    .groupBy(config.definitions, def => def.from.key)
+    .groupBy(definitions, def => def.from.key)
     .entries()
     .map(([fromKey, definitions]): DefinitionsGroup => ({
       fromKey,
       definitions
     }))
-  return groups.flatMap(group => processGroup(config.lazy, group)).toArray()
+  return groups.flatMap(group => processGroup(group)).toArray()
 }
