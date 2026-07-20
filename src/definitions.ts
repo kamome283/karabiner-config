@@ -6,14 +6,44 @@ import {
   FromModifierParam,
   ModifierParam,
   ToEventOptions,
-  ToKeyParam,
+  ToKeyParam
 } from "karabiner.ts";
 
-type FromDefinition = [FromKeyParam: FromKeyParam, FromModifierParam?: FromModifierParam]
-export type ToDefinition = [ToKeyParam: ToKeyParam, ModifierParam?: ModifierParam, ToEventOptions?: ToEventOptions]
-export type Definition = [From: FromDefinition, To: ToDefinition, ToIfAlone?: ToDefinition]
+type FromDefinition = {
+  key: FromKeyParam,
+  mod?: FromModifierParam
+}
 
-export const definitions: Definition[] = [
+export type ToDefinition = {
+  key: ToKeyParam,
+  mod?: ModifierParam,
+  options?: ToEventOptions,
+}
+
+export type Definition = {
+  from: FromDefinition,
+  to: ToDefinition,
+  ifAlone?: ToDefinition,
+}
+
+type SimplifiedFromDefinition = [FromKeyParam, FromModifierParam?]
+type SimplifiedToDefinition = [ToKeyParam, ModifierParam?]
+type SimplifiedDefinition = [
+  SimplifiedFromDefinition,
+  SimplifiedToDefinition,
+  SimplifiedToDefinition?
+]
+
+const formalizeDefinition = (simplifiedDef: SimplifiedDefinition): Definition => {
+  const [simpleFrom, simpleTo, simpleIfAlone] = simplifiedDef
+  return {
+    from: {key: simpleFrom[0], mod: simpleFrom[1]},
+    to: {key: simpleTo[0], mod: simpleTo[1]},
+    ifAlone: simpleIfAlone ? {key: simpleIfAlone[0], mod: simpleIfAlone[1]} : undefined
+  }
+}
+
+const simplifiedDefinitions: SimplifiedDefinition[] = [
   // Numeric row
   [["grave_accent_and_tilde"], ["equal_sign", "shift"]], // ZenHan => ~
   [["2", "left_shift"], ["international3", "shift"]], // Shift + 2 => |
@@ -42,3 +72,5 @@ export const definitions: Definition[] = [
   [["left_option"], ["left_option"], ["japanese_eisuu"]],
   [["japanese_pc_katakana"], ["left_option"], ["japanese_kana"]],
 ];
+
+export const definitions: Definition[] = simplifiedDefinitions.map(formalizeDefinition)

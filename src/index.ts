@@ -1,8 +1,12 @@
 import {mapPointingButton, rule, writeToProfile} from "karabiner.ts";
+import {Config, constructManipulators} from "./constructor";
 import {definitions} from "./definitions";
-import {ManipulatorsGeneratorFactory} from "./manipulator-creation";
 
-const manipulators = new ManipulatorsGeneratorFactory(false).create(definitions).generate();
+const config: Config = {
+  lazy: false,
+  definitions: definitions
+}
+const manipulators = constructManipulators(config)
 
 // `npm run build`で設定の書き換えを行う
 writeToProfile("Basic Profile for Lenovo Trackpoint Keyboard 2 by Kamome283", [
