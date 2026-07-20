@@ -3,7 +3,7 @@ import {Config, constructManipulators} from "./constructor";
 import {definitions} from "./definitions";
 
 const config: Config = {
-  lazy: false,
+  lazy: true,
   definitions: definitions
 }
 const manipulators = constructManipulators(config)
