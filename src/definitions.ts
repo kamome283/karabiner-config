@@ -71,6 +71,11 @@ const simplifiedDefinitions: SimplifiedDefinition[] = [
   [["japanese_pc_xfer"], ["right_command"], ["return_or_enter"]],
   [["left_option"], ["left_option"], ["japanese_eisuu"]],
   [["japanese_pc_katakana"], ["left_option"], ["japanese_kana"]],
+  // Additional cursor keys
+  [["h", "right_control"], ["left_arrow"]],
+  [["j", "right_control"], ["down_arrow"]],
+  [["k", "right_control"], ["up_arrow"]],
+  [["l", "right_control"], ["right_arrow"]],
 ];
 
 export const definitions: Definition[] = simplifiedDefinitions.map(formalizeDefinition)
